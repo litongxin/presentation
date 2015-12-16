@@ -130,7 +130,7 @@ module.exports = function(grunt) {
 				tasks: 'css-core'
 			},
             html: {
-                files: [ 'index.html','bootstrap_and_responsive_web.html']
+                files: [ 'index.html','bootstrap_and_responsive_web.html','gulp_vs_grunt.html']
             }
 		}
 

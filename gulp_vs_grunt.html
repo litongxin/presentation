@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Gulp Vs Grunt</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/thoughtworks.css" id="theme">
+
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h1>gulp vs grunt</h1>
+					<h3>War of Build Scripts</h3>
+					<p>
+						<small>Created by <a target=_blank href="https://github.com/litongxin">Li Tongxin</a></small>
+					</p>
+				</section>
+
+				<section>
+					<h2>Summary</h2>
+					<ol>
+						<li>Comparison</li>
+								<ul>
+									<li>Speed</li>
+									<li>Community</li>
+									<li>Code Vs Configuration</li>
+								</ul>
+						<li>Code Demo</li>
+						<li>Why we should stop using Grunt & Gulp</li>
+					</ol>
+				</section>
+				<section>
+					<section>
+					<h2>Speed</h2>
+						<p>
+							Grunt handles this using intermediary files which are disk I/O operations.
+						</p>
+						<img width="700" height="300" data-src="./asset/img/grunt-flow.png">
+						</section>
+						<section>
+						<p>
+							Gulp takes care of all this in-memory.
+						</p>
+						<img width="800" height="170" data-src="./asset/img/gulp-flow.png">
+						</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Community</h2>
+						<br/>
+						<a href="http://www.google.com/trends/explore#cat=0-5-31&q=grunt%2C%20gulp&date=1%2F2013%2024m&cmpt=q" target="_blank">Google Trends</a>
+						<br/>
+						<p><small>Grunt has 5,381 plugins, Gulp only has 2,019 plugins</small></p>
+					</section>
+				</section>
+
+				<section>
+						<h2>Code Vs Configuration</h2>
+						<ol>
+							<li>Task Pipeline</li>
+							<li>Task Dependencies</li>
+						</ol>
+				</section>
+
+				<section>
+					<section>
+						<h2>Task Pipeline</h2>
+						<p>grunt</p>
+						<pre>
+							<code data-trim>
+grunt.initConfig({
+	  clean: ...,
+		assets: ...,
+	  concat: ...
+});
+grunt.registerTask('preCompile', [
+    'clean:assets',
+    'concat',
+    'uglify',
+    'copy:assets',
+    'sass',
+    'cssmin'
+]);
+							</code>
+						</pre>
+					</section>
+					<section>
+						<p>gulp</p>
+						<pre>
+							<code data-trim>
+gulp.task('compileCss' ,function () {
+	gulp.src('./src/css/*.css')
+  .pipe(concat())
+	.pipe(uglify())
+  .pipe(cssmin())
+  .pipe(gulp.dest('./build/css'));
+});
+							</code>
+						</pre>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Task Dependencies</h2>
+						<p>grunt</p>
+						<p>
+							<small>grunt.registerTask('unitTests', ['testCI', 'jest']);</small>
+							<br/>
+							<small>Execute from left to right</small>
+						</p>
+						<p>gulp</p>
+						<p>
+							<small>gulp.task('unitTests',['testCI','jest'])</small>
+							<br/>
+							<small>Execute randomly</small>
+						</p>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Code Demo</h2>
+					</section>
+					<section>
+						<p>grunt</p>
+						<pre>
+						<code data-trim style="max-height:590px">
+module.exports = function(grunt) {
+  grunt.initConfig({
+    concat: {
+      'dist/all.js': ['src/*.js']
+    },
+    uglify: {
+      'dist/all.min.js': ['dist/all.js']
+    },
+    jshint: {
+      files: ['gruntfile.js', 'src/*.js']
+    },
+    watch: {
+      files: ['gruntfile.js', 'src/*.js'],
+      tasks: ['jshint', 'concat', 'uglify']
+    }
+  });
+
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.registerTask('default', ['jshint', 'concat', 'uglify']);
+};
+						</code>
+					</pre>
+					</section>
+					<section>
+						<p>gulp</p>
+						<pre>
+							<code data-trim style="max-height:590px">
+var gulp = require('gulp');
+var jshint = require('gulp-jshint');
+var concat = require('gulp-concat');
+var rename = require('gulp-rename');
+var uglify = require('gulp-uglify');
+
+gulp.task('lint', function() {
+  return gulp.src('src/*.js')
+    .pipe(jshint())
+    .pipe(jshint.reporter('default'));
+});
+gulp.task('minify', function(){
+  return gulp.src('src/*.js')
+    .pipe(concat('all.js'))
+    .pipe(gulp.dest('dist'))
+    .pipe(rename('all.min.js'))
+    .pipe(uglify())
+    .pipe(gulp.dest('dist'));
+});
+gulp.task('watch', function() {
+  gulp.watch('src/*.js', ['lint', 'minify']);
+});
+gulp.task('default', ['lint', 'minify', 'watch']);
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h2>Difference</h2>
+						<p><small>With gulp we don't include a watch plugin because watch is a core feature - there is no plugin needed. </small></p>
+						<p><small>With Grunt the renaming of our minified file is handled by the uglify plugin. One plugin has the responsibility of minfiying the code AND renaming it.</small></p>
+						<p><small>With gulp, every plugin has a single action - a single responsibility. To rename our minified file in gulp, we simply include the gulp-rename plugin and include it in our minify tasks pipechain.</small></p>
+					</section>
+				</section>
+
+				<section>
+					<h2>Why we should stop using Grunt & Gulp</h2>
+					<a href="http://blog.keithcirkel.co.uk/why-we-should-stop-using-grunt/" target="_blank">Click here<a>
+				</section>
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+		</script>
+
+	</body>
+</html>
