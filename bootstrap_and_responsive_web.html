@@ -205,7 +205,7 @@ CSS Output:
 						<h2>CSS Units Change</h2>
 						<p>Global font-size increased from 14px to 16px.</p>
 						<p>Switched from px to rem as our primary CSS unit.</p>
-						<p>Media queries are now in ems instead of pxs.</p>
+						<p>Only media queries are still using pxs.</p>
 						<p><small>
 							While em is relative to the font-size of its direct or nearest parent, rem is only relative to the html (root) font-size.
 						</small></p>
@@ -215,7 +215,7 @@ CSS Output:
 				<section>
 					<section>
 						<h2>Grid System Improvement</h2>
-						<p>Added a new grid tier for ~480px and below.</p>
+						<p>Added a new grid tier for ~576px and below.</p>
 					</section>
 					<section>
 						<table style="font-size:21px">
@@ -224,23 +224,23 @@ CSS Output:
 						        <th></th>
 						        <th>
 						          Extra small
-						          <small>&lt;34em</small>
+						          <small>&lt;576px</small>
 						        </th>
 						        <th>
 						          Small
-						          <small>≥34em</small>
+						          <small>≥576px</small>
 						        </th>
 						        <th>
 						          Medium
-						          <small>≥48em</small>
+						          <small>≥768px</small>
 						        </th>
 						        <th>
 						          Large
-						          <small>≥62em</small>
+						          <small>≥992px</small>
 						        </th>
 						        <th>
 						          Extra large
-						          <small>≥75em</small>
+						          <small>≥1140px</small>
 						        </th>
 						      </tr>
 						    </thead>
@@ -251,12 +251,12 @@ CSS Output:
 						        <td colspan="4">Collapsed to start, horizontal above breakpoints</td>
 						      </tr>
 						      <tr>
-						        <th>Container width</th>
+						        <th>Max Container width</th>
 						        <td>None (auto)</td>
-						        <td>34rem</td>
-						        <td>45rem</td>
-						        <td>60rem</td>
-						        <td>72.25rem</td>
+						        <td>540px</td>
+						        <td>720px</td>
+						        <td>960px</td>
+						        <td>1140px</td>
 						      </tr>
 						      <tr>
 						        <th>Class prefix</th>
@@ -291,7 +291,10 @@ CSS Output:
 						  </table>
 					</section>
 					<section>
-						<h2><a>Small Demo</a></h2>
+						<h2>Dojo</h2>
+						<p>
+							<a target=_blank href="https://github.com/litongxin/head-first-bootstrap">github repo</a>
+						</p>
 					</section>
 				</section>
 
@@ -338,6 +341,11 @@ CSS Output:
 						<li><a>https://css-tricks.com</a></li>
 						<li><a>http://www.smashingmagazine.com</a></li>
 					</ul>
+				</section>
+
+				<section>
+					<h2>Free Talk</h2>
+					<img width="350" height="350" data-src="./asset/img/feedback-qr-code-2.png">
 				</section>
 			</div>
 
