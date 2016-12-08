@@ -97,20 +97,20 @@
 					</section>
 					<section>
 						<h2>Stronger Language Ability: Logic/Loops</h2>
-						<p>Scenario 1: set different theme color for different website.</p>
+						<p>Scenario 1: set different theme color for different domain.</p>
 						<pre>
 							<code data-trim contenteditable>
 SASS implementation:
-@mixin theme_color($site-name) {
-  @if $site-name == "Residential" {
-      color: red;
+@mixin theme_color($site-domain) {
+  @if $site-domain == "Oversea" {
+      color: blue;
   }
   @else {
-      color: blue;
+      color: red;
   }
 }
 div{
-  @include theme_color("Commercial");
+  @include theme_color("Oversea");
 }
 CSS Output:
 div{
@@ -123,14 +123,14 @@ div{
 						<pre>
 							<code data-trim contenteditable>
 LESS implementation:
-.set-theme-color (@site-name) when ( @site-name = 'Residential') {
+.set-theme-color (@site-domain) when ( @site-domain = 'MainLand') {
   color: red;
 }
-.set-theme-color (@site-name) when ( @site-name = 'Commercial') {
+.set-theme-color (@site-domain) when ( @site-domain = 'Oversea') {
   color: blue;
 }
 div{
-  .set-theme-color("Commercial");
+  .set-theme-color("Oversea");
 }
 CSS Output:
 div{
@@ -337,9 +337,9 @@ CSS Output:
 				<section>
 					<h2>Useful Website</h2>
 					<ul style="list-style: none;">
-						<li><a>http://caniuse.com</a></li>
-						<li><a>https://css-tricks.com</a></li>
-						<li><a>http://www.smashingmagazine.com</a></li>
+						<li><a target="_blank" href="http://caniuse.com">http://caniuse.com</a></li>
+						<li><a target="_blank" href="https://css-tricks.com">https://css-tricks.com</a></li>
+						<li><a target="_blank" href="http://www.smashingmagazine.com">http://www.smashingmagazine.com</a></li>
 					</ul>
 				</section>
 
