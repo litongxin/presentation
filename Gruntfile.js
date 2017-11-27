@@ -125,7 +125,13 @@ module.exports = function (grunt) {
         tasks: 'css-core'
       },
       html: {
-        files: ['index.html', 'bootstrap_and_responsive_web.html', 'gulp_vs_grunt.html', 'javascript_test_frameworks_and_libraries.html']
+        files: [
+          'index.html',
+          'bootstrap_and_responsive_web.html',
+          'gulp_vs_grunt.html',
+          'javascript_test_frameworks_and_libraries.html',
+          'aws_basics.html'
+        ]
       }
     }
 
