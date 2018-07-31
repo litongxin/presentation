@@ -239,10 +239,146 @@
                 </div>
             </section>
             <section>
-                <img width="800" data-src="./asset/img/native-app.png">
+                <img width="700" data-src="./asset/img/native-app.png">
             </section>
             <section>
-                <img width="800" data-src="./asset/img/app-shell.png">
+                <img width="700" data-src="./asset/img/app-shell.png">
+            </section>
+            <section>
+                <img width="700" data-src="./asset/img/ssr-csr.jpg">
+            </section>
+            <section>
+                <h3>PRPL pattern</h3>
+                <div style="text-align: left; font-size: 30px; margin-left: 150px;">
+                    <p><span style="font-weight: bold">Push</span> critical resources for the initial URL route.</p>
+                    <p><span style="font-weight: bold">Render</span> initial route.</p>
+                    <p><span style="font-weight: bold">Pre-cache</span> remaining routes.</p>
+                    <p><span style="font-weight: bold">Lazy-load</span> and create remaining routes on demand.</p>
+                </div>
+            </section>
+            <section>
+                <p style="font-size: 30px"><span style="font-weight: bold">Push</span> critical resources for the initial URL route.</p style="font-size: 30px">
+                <pre>
+						        <code>
+<link ref=preload as="style/script" crossorigin=".." href="..">
+                    </code>
+					      </pre>
+            </section>
+            <section>
+                <h3>HTTP/2</h3>
+                <div style="text-align: left; font-size: 25px">
+                    <p>Multiplexed downloads over a single connection</p>
+                    <p>Minimize protocol overhead via efficient compression of HTTP header fields</p>
+                    <p>Request prioritization</p>
+                    <p>Server push, preemptively send resources to the browser.</p>
+                </div>
+            </section>
+            <section>
+                <img width="700" data-src="./asset/img/http2-headers.png">
+            </section>
+            <section>
+                <p style="font-size: 30px"><span style="font-weight: bold">Render</span> initial route.</p>
+                <p style="font-size: 30px"><span style="font-weight: bold">Lazy-load</span> and create remaining routes on demand.</p>
+                <small class="fragment roll-in" style="vertical-align: middle; color: #FACA66">code split...</small>
+                <small class="fragment roll-in" style="vertical-align: middle; color: #FACA66">dynamic import...</small>
+            </section>
+            <section>
+                <img width="700" data-src="./asset/img/app-shell-demo.png">
+            </section>
+            <section>
+                <h4>code split</h4>
+                <pre>
+                    <code>
+{
+    "entrypoint": "index.html",
+    "shell": "src/my-app.html",
+    "fragments": [
+        "src/list-view.html",
+        "src/detail-view.html",
+        "src/404.html"
+    ]
+}
+                    </code>
+                </pre>
+            </section>
+            <section>
+                <h4>dynamic import</h4>
+                <pre>
+                    <code>
+const MyView = () => import('./MyView.vue');
+
+const router = new VueRouter({
+    routes:[
+        {
+            path: ‘/my-view',
+            component: MyView
+        }
+    ]
+});
+
+
+import('./my-view').then((myView) => {...});
+                    </code>
+                </pre>
+            </section>
+            <section>
+                <p style="font-size: 30px"><span style="font-weight: bold">Pre-cache</span> remaining routes.</p>
+                <pre>
+						        <code>
+<link rel="prefetch" as="html/style/script" href="..">
+                    </code>
+					      </pre>
+            </section>
+            <section>
+                <h3 style="text-transform: none">Service Worker</h3>
+                <div style="text-align: left; font-size: 25px; margin-left: 150px;">
+                    <p>Rich offline experiences</p>
+                    <p>Periodic background syncs</p>
+                    <p>Push notifications</p>
+                    <p>Intercept and handle network requests</p>
+                </div>
+            </section>
+            <section>
+                <p>Register service worker</p>
+                <pre>
+                    <code>
+window.addEventListener("load", function() {
+    console.log("Will the service worker register?");
+    navigator.serviceWorker.register('/sw.js')
+    .then(function(reg){
+        console.log("Yes, it did.");
+    }).catch(function(err) {
+        console.log("No it didn't. This happened: ", err)
+    });
+});
+                    </code>
+                </pre>
+            </section>
+            <section>
+                <p>Install service worker (sw.js)</p>
+                <pre>
+                    <code>
+const CACHE_NAME = "app-shell";
+const cacheResources = ['/index.html','/js/main.js','/css/main.css'];
+
+this.addEventListener("install", function(event) {
+    this.skipWaiting();
+    console.log("install service worker");
+    caches.open(CACHE_NAME);
+    event.waitUntil(
+        caches.open(CACHE_NAME).then(cache => {
+           return cache.addAll(cacheResources);
+        })
+    );
+});
+                    </code>
+                </pre>
+            </section>
+            <section>
+                <h3>Perceived experience - Page Skeleton</h3>
+                <img width="240" data-src="./asset/img/page-skeleton.gif">
+                <img style="margin-left: 50px" width="240" data-src="./asset/img/generate-page-skeleton.png">
+                <small style="margin-left: -290px; margin-top: 100px; max-width: 350px">When SSR, inline skeleton HTML + CSS fragment into app-shell.</small>
             </section>
         </section>
 
@@ -255,6 +391,7 @@
                 <li><a target="_blank" href="http://doc.flutter-dev.cn/">http://doc.flutter-dev.cn/</a></li>
                 <li><a target="_blank" href="http://spritejs.org/">http://spritejs.org/</a></li>
                 <li><a target="_blank" href="https://developers.google.com/web/progressive-web-apps/">https://developers.google.com/web/progressive-web-apps/</a></li>
+                <li><a target="_blank" href="https://developers.google.com/web/fundamentals/performance/prpl-pattern/">https://developers.google.com/web/fundamentals/performance/prpl-pattern/</a></li>
             </ul>
         </section>
     </div>
